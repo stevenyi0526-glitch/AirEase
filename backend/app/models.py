@@ -3,7 +3,7 @@ AirEase Backend - Pydantic Models
 数据模型定义
 """
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, EmailStr
 from typing import Optional, List
 from datetime import datetime, date
 from enum import Enum
@@ -190,7 +190,9 @@ class SearchMeta(BaseModel):
     total: int
     search_id: str = Field(alias="searchId")
     cached_at: Optional[datetime] = Field(default=None, alias="cachedAt")
-    
+    restricted_count: int = Field(default=0, alias="restrictedCount")
+    is_authenticated: bool = Field(default=False, alias="isAuthenticated")
+
     class Config:
         populate_by_name = True
 
@@ -223,3 +225,52 @@ class ErrorResponse(BaseModel):
     error: str
     detail: Optional[str] = None
     code: int
+
+
+# ============================================================
+# User Authentication Models
+# ============================================================
+
+class UserBase(BaseModel):
+    """User base model"""
+    email: EmailStr
+    username: str = Field(min_length=3, max_length=50)
+
+
+class UserCreate(UserBase):
+    """User registration request"""
+    password: str = Field(min_length=6)
+
+
+class UserLogin(BaseModel):
+    """User login request"""
+    email: EmailStr
+    password: str
+
+
+class UserResponse(UserBase):
+    """User response (no password)"""
+    id: int
+    created_at: datetime
+    is_active: bool = True
+
+    class Config:
+        from_attributes = True
+
+
+class Token(BaseModel):
+    """JWT token response"""
+    access_token: str = Field(alias="accessToken")
+    token_type: str = Field(default="bearer", alias="tokenType")
+    expires_in: int = Field(alias="expiresIn")  # seconds
+    user: UserResponse
+
+    class Config:
+        populate_by_name = True
+
+
+class TokenData(BaseModel):
+    """Decoded token data"""
+    user_id: int
+    email: str
+    exp: datetime

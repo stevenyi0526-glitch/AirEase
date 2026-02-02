@@ -12,6 +12,8 @@ import time
 from app.config import settings
 from app.routes.flights import router as flights_router
 from app.routes.ai import router as ai_router
+from app.routes.auth import router as auth_router
+from app.database import init_db
 
 
 @asynccontextmanager
@@ -22,7 +24,13 @@ async def lifespan(app: FastAPI):
     print(f"   Debug mode: {settings.debug}")
     print(f"   Gemini API: {'✓ configured' if settings.gemini_api_key else '✗ not configured'}")
     print(f"   Amadeus API: {'✓ configured' if settings.amadeus_api_key else '✗ not configured'}")
-    
+    print(f"   JWT Auth: ✓ configured")
+
+    # Initialize database
+    print("   Initializing database...")
+    init_db()
+    print("   Database: ✓ ready")
+
     yield
     
     # Shutdown
@@ -58,13 +66,14 @@ app = FastAPI(
     lifespan=lifespan
 )
 
-# CORS Middleware
+# CORS Middleware - Allow all origins for development
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.cors_origins_list,
-    allow_credentials=True,
+    allow_origins=["*"],
+    allow_credentials=False,  # Must be False when using wildcard "*" for origins
     allow_methods=["*"],
     allow_headers=["*"],
+    expose_headers=["*"],
 )
 
 
@@ -92,6 +101,7 @@ async def global_exception_handler(request: Request, exc: Exception):
 
 
 # Include routers
+app.include_router(auth_router)
 app.include_router(flights_router)
 app.include_router(ai_router)
 

@@ -30,6 +30,11 @@ class Settings(BaseSettings):
     
     # CORS
     cors_origins: str = "*"
+
+    # JWT Authentication
+    jwt_secret: str = "airease-super-secret-key-change-in-production-2024"
+    jwt_algorithm: str = "HS256"
+    jwt_expire_minutes: int = 10080  # 7 days
     
     @property
     def cors_origins_list(self) -> list[str]:
