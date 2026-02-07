@@ -16,7 +16,7 @@ class GeminiService:
     """Gemini AI 服务 - 自然语言解析"""
     
     BASE_URL = "https://generativelanguage.googleapis.com/v1beta"
-    MODEL = "gemini-2.0-flash-exp"
+    MODEL = "gemini-3-flash-preview-exp"
     
     def __init__(self):
         self.api_key = settings.gemini_api_key

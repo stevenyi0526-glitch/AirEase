@@ -103,6 +103,6 @@ async def ai_health():
     return {
         "status": "ok" if has_key else "no_api_key",
         "service": "gemini",
-        "model": "gemini-2.0-flash-exp",
+        "model": "gemini-3-flash-preview-exp",
         "api_key_configured": has_key
     }

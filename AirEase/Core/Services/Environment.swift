@@ -50,7 +50,7 @@ enum Environment {
         
         // Fallback: hardcoded for development (remove in production)
         if result["GEMINI_API_KEY"] == nil || result["GEMINI_API_KEY"]?.isEmpty == true {
-            result["GEMINI_API_KEY"] = "AIzaSyCdyS2YsF9CmCuwK4dFhgMrk3sv5dbrH6Q"
+            result["GEMINI_API_KEY"] = "AIzaSyAQoutqlgUTNYhgpy1fWHoBRj9ETwCTkb0"
         }
         
         return result

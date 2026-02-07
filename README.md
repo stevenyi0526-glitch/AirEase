@@ -166,12 +166,12 @@ AppConfiguration.shared.baseURL = "https://your-api-domain.com"
 用于 **AI智能搜索**功能，自然语言解析航班查询。
 
 - **官网**: https://ai.google.dev/
-- **模型**: `gemini-2.0-flash-exp`
+- **模型**: `gemini-3-flash-preview-exp`
 - **配置位置**: `.env` 文件中的 `GEMINI_API_KEY`
 
 ```bash
 # .env
-GEMINI_API_KEY=AIzaSyCdyS2YsF9CmCuwK4dFhgMrk3sv5dbrH6Q
+GEMINI_API_KEY=...
 ```
 
 **使用示例**:

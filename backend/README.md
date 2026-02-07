@@ -28,7 +28,7 @@ pip install -r requirements.txt
 
 ```bash
 # Gemini API Key（已配置）
-GEMINI_API_KEY=AIzaSyCdyS2YsF9CmCuwK4dFhgMrk3sv5dbrH6Q
+GEMINI_API_KEY=...
 
 # Amadeus API（可选，用于真实航班数据）
 AMADEUS_API_KEY=your_key
